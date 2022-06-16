@@ -1,3 +1,4 @@
+from email.mime import image
 from pickle import NONE
 from time import sleep, time
 from operator import truediv
@@ -16,10 +17,9 @@ def verify(name):
         return 0
 
 def Find_Click(name):
-    while True:
         if verify(name) == 1:
             pyautogui.click(local)
-            break
+           
 
 def Combat_Tower():
     while True:
@@ -53,14 +53,16 @@ def roll():
 time.sleep(2)
 caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Bright Fortune"
 os.chdir(caminho)
-while True:
-    Find_Click("bright_fortune_3.png")
-    
-    time.sleep(2)
-    if verify("bright_fortune_4.png") == 1:
-        if verify("ok.png") == 1:
-            pyautogui.click(local)                
-    else:
-        if verify("ok.png") == 1:
-            pyautogui.click(local)
+
+def click_verify(a:str,b:str):
+    '''Click and verify next step
+       -params: a = Where to click
+                b = Next Step
+    '''
+    while True:
+        Find_Click(a)
+        time.sleep(1)
+        if verify(b) == 1:
             break
+
+        click_verify()

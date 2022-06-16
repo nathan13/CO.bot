@@ -27,13 +27,13 @@ def verify(name:str) -> int:
         return 1
     else:
         return 0
-        
+
+
+
 def Find_Click(name):
-    while True:
         if verify(name) == 1:
             pyautogui.click(local)
-            if verify(name) == 0:
-                break
+
 
 def Find_Move(name):
     while True:
@@ -72,13 +72,7 @@ def Combat_Tower():
             Find_Click("towerofmystery15.png")
             return
 
-#Go To LDPlayer Window
-while True:
-        title = "LDPlayer"
-        window = pygetwindow.getWindowsWithTitle(title)[0]
-        window.activate()
-        if verify("LDPlayer_Window.png") == 1:
-            break
+
 
 #beginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 
@@ -101,28 +95,51 @@ def Verify_Click(name):
         else:
             return 0
 
+def click_verify(a:str,b:str,c:int):
+    '''Click and verify next step
+       -params: a = Where to click
+                b = Next Step
+                c = 1 -- If image found
+                    0 -- If image not found
+    '''
+    while True:
+        Find_Click(a)
+        time.sleep(0.1)
+        if c == 1:
+            for vv in range(3):
+                if verify(b) == 1:
+                    return
+                time.sleep(1)
+        elif c == 0:
+            for vv in range(3):
+                if verify(b) == 0:
+                    return
+                time.sleep(1)
+
 
 def BackToDaily():
     #set image path
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
     os.chdir(ImagePath)
 
-    #set DA_Position = Daily Arrow Position
-    verify("daily_arrow.png")
-    global DA_position
-    DA_position = local
+ 
 
     #start
     while True:
-        Verify_Click("daily_arrow.png")
-        Verify_Click("daily_button.png")
-        if Verify_Click("daily_ok.png") == 1:
+        while True:
             pyautogui.click(DA_position)
-            #Verify If its over
-            for a in range(6):
-                time.sleep(1)
-                if verify("daily_quest.png") == 1:
-                    return 
+            time.sleep(0.1)
+            if verify("daily_button.png") == 1:
+                break
+
+        click_verify("daily_button.png","daily_ok.png",1)
+        click_verify("daily_ok.png","daily_ok.png",0)
+        pyautogui.click(DA_position)
+        #Verify If its over
+        for a in range(6):
+            time.sleep(1)
+            if verify("daily_quest.png") == 1:
+                return 
 
 
 def Bright_Fortune():
@@ -158,13 +175,13 @@ def Open_Treasure():
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Open Treasure"
     os.chdir(ImagePath)
     #start
-    Find_Click("open_treasure.png")
-    Find_Click("open_treasure_1.png")
-    Find_Click("open_treasure_2.png")
-    Find_Click("open_treasure_3.png") 
-    Find_Click("ok.png")
-    Find_Click("open_treasure_npc.png")     
-    Find_Click("open_treasure_4.png") 
+    click_verify("open_treasure.png","open_treasure_1.png",1)
+    click_verify("open_treasure_1.png","open_treasure_2.png",1)
+    click_verify("open_treasure_2.png","open_treasure_3.png",1)
+    click_verify("open_treasure_3.png","ok.png",1)
+    click_verify("ok.png","open_treasure_npc.png",1)  
+    click_verify("open_treasure_npc.png","open_treasure_4.png",1)
+    click_verify("open_treasure_4.png","open_treasure_4.png",0)
     return 0
 
 def Fellow_Fighters():
@@ -412,10 +429,31 @@ def Devil_Challenge():
 
     
 
+#Go To LDPlayer Window
+while True:
+        title = "LDPlayer"
+        window = pygetwindow.getWindowsWithTitle(title)[0]
+        window.activate()
+        if verify("LDPlayer_Window.png") == 1:
+            break
 
+global DA_position
+DA_position = None
+#set DA_Position = Daily Arrow Position
+while True:
+    
+    if verify("daily_arrow.png") == 1:
+        if DA_position != None:
+            pyautogui.click(DA_position)
+            
+        
+        DA_position = local
+        if verify("daily_button.png") == 1:
+            pyautogui.click(DA_position)
+            break
 
 BackToDaily()
-EverythingHasAPrice()
+
 
 #Magnolias_All_Around()
 
