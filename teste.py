@@ -51,18 +51,8 @@ def roll():
             return 0
 
 time.sleep(2)
-caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Bright Fortune"
+caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Everything Has a Price"
 os.chdir(caminho)
 
-def click_verify(a:str,b:str):
-    '''Click and verify next step
-       -params: a = Where to click
-                b = Next Step
-    '''
-    while True:
-        Find_Click(a)
-        time.sleep(1)
-        if verify(b) == 1:
-            break
-
-        click_verify()
+while True:
+    Find_Move("EverythingHasAPrice_10.png")

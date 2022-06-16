@@ -2,37 +2,53 @@ from pickle import NONE
 from time import sleep, time
 import pyautogui, os, time,pygetwindow
 
-#?
+global ImagePath
+ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img" 
+global RollPath
+RollPath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"    
+
+#OK
 def verify(name:str) -> int:
-    '''Verify image on screen
-        -> params: name = Image Name
-        -> Returns: 1  = Image Found
-                    0  = Image not found
+    '''
+        Verify image on screen
+        - params: -> name = ImageName.png
+        - Returns: -> 1  = Image Found | -> 0  = Image not found
     ''' 
-    arquivo = name
     global local
-    local = pyautogui.locateOnScreen(arquivo, confidence=0.9)
+    local = pyautogui.locateOnScreen(name, confidence=0.9)
     if local != None:
         return 1
     else:
         return 0
 
-#?
-def Find_Click(name):
-        if verify(name) == 1:
-            pyautogui.click(local)
+#OK
+def Find_Click(name:str):
+    '''
+        Click on local image if found
+        - params: name = ImageName.png
+    '''
+    if verify(name) == 1:
+        pyautogui.click(local)
 
-#?
-def Find_Move(name):
-    while True:
-        if verify(name) == 1:
-            pyautogui.moveTo(local)
-            break
+#OK
+def Find_Move(name:str):
+    '''
+        Move to Local Image if found
+        - params: name = ImageName.png
+    '''
+    if verify(name) == 1:
+        pyautogui.moveTo(local)
+           
+#OK
+def roll():
+    '''
+        Scroll mouse in a specific location
+    '''    
 
-#?
-def roll():     
-    RollPath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"                           
+    # Set image path                       
     os.chdir(RollPath)
+
+    #Start
     while True:
         if verify("roll.png") == 1:
             pyautogui.moveTo(local)
@@ -40,7 +56,26 @@ def roll():
             pyautogui.move(0,-100,duration=0.2)
             pyautogui.mouseUp()  
             os.chdir(ImagePath)
-            return 0
+            return
+
+#?
+def Find_Roll(name:str,name2:str):                       
+    while True:
+        if verify(name) == 1:
+            kk = local
+            click_verify(kk,0,name2,1)
+            return
+        else:
+            os.chdir(RollPath)
+            while True:
+                if verify("roll.png") == 1:
+                    pyautogui.moveTo(local)
+                    pyautogui.mouseDown()
+                    pyautogui.move(0,-100,duration=0.2)
+                    pyautogui.mouseUp()
+                    os.chdir(ImagePath)  
+                    break
+
 
 #?            
 def Combat_Tower():
@@ -92,8 +127,11 @@ def click_verify(a:str,b:int,c:str,d:int):
 
 #OK               
 def BackToDaily():
-
+    '''
+        Back to Daily Quest NPC
+    '''
     #set image path
+    global ImagePath
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
     os.chdir(ImagePath)
 
@@ -138,21 +176,26 @@ def Bright_Fortune():
             Find_Click("bright_fortune_end.png")
             return 0
 
-#?
+#OK
 def Open_Treasure():
+    '''
+        Complete the "Open Treasure" quest from Daily Quest NPC
+    '''
+
     #set Image Path
     global ImagePath
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Open Treasure"
     os.chdir(ImagePath)
+
     #start
-    click_verify("open_treasure.png","open_treasure_1.png",1)
-    click_verify("open_treasure_1.png","open_treasure_2.png",1)
-    click_verify("open_treasure_2.png","open_treasure_3.png",1)
-    click_verify("open_treasure_3.png","ok.png",1)
-    click_verify("ok.png","open_treasure_npc.png",1)  
-    click_verify("open_treasure_npc.png","open_treasure_4.png",1)
-    click_verify("open_treasure_4.png","open_treasure_4.png",0)
-    return 0
+    click_verify("open_treasure.png",1,"open_treasure_1.png",1)
+    click_verify("open_treasure_1.png",1,"open_treasure_2.png",1)
+    click_verify("open_treasure_2.png",1,"open_treasure_3.png",1)
+    click_verify("open_treasure_3.png",1,"ok.png",1)
+    click_verify("ok.png",1,"open_treasure_npc.png",1)  
+    click_verify("open_treasure_npc.png",1,"open_treasure_4.png",1)
+    click_verify("open_treasure_4.png",1,"open_treasure_4.png",0)
+    return 
 
 #?
 def Fellow_Fighters():
@@ -178,116 +221,142 @@ def Fellow_Fighters():
         else:        
             roll()
 
-#?
+#OK
 def Magnolias_All_Around():
+    '''
+        Complete the "Magnolias All Around" quest from Daily Quest NPC
+    '''
+
+    #Set Image Path
     global ImagePath
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Magnolias All Around"
     os.chdir(ImagePath)
-    while True:
-        if verify("magnolias_all_around.png") == 1:
-            pyautogui.click(local)
-            Find_Click("magnolias_all_around2.png")   
-            Find_Click("magnolias_all_around3.png") 
-            Find_Click("magnolias_all_around4.png") 
-            Find_Click("magnolias_all_around5.png")
-            Find_Click("ok.png")      
-            pyautogui.press("b")  
-            Find_Click("magnolias_all_around7.png")
-            Find_Click("magnolias_all_around8.png")
-            Find_Click("ok.png")
-            Find_Click("magnolias_all_around11.png")
-            Find_Click("magnolias_all_around9.png")
-            Find_Click("magnolias_all_around10.png")
-            return 0                          
-        else:
-            roll()
 
-#?
+    #Start
+    Find_Roll("magnolias_all_around.png","magnolias_all_around2.png")
+    click_verify("magnolias_all_around2.png",1,"magnolias_all_around3.png",1)
+    click_verify("magnolias_all_around3.png",1,"magnolias_all_around4.png",1) 
+    click_verify("magnolias_all_around4.png",1,"magnolias_all_around5.png",1)
+    click_verify("magnolias_all_around5.png",1,"ok.png",1)
+    click_verify("ok.png",1,"ok.png",0)    
+    Bag(1)
+    click_verify("magnolias_all_around7.png",1,"magnolias_all_around8.png",1)
+    click_verify("magnolias_all_around8.png",1,"ok.png",1)
+    click_verify("ok.png",1,"ok.png",0)
+    Bag(0)
+    click_verify("magnolias_all_around9.png",1,"magnolias_all_around10",1)
+    click_verify("magnolias_all_around10",1,"magnolias_all_around10",0)
+    return                    
+
+#OK
 def Spirit_Beads():
+    '''
+        Complete the "Spirit Beads" quest from Daily Quest NPC
+    '''
+
+    #set image path
     global ImagePath
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Spirit Beads"
     os.chdir(ImagePath)
-    while True:
-        if verify("spirit_beads.png") == 1:
-            pyautogui.click(local)
-            Find_Click("spirit_beads2.png")
-            Find_Click("ok.png")
-            return 0
-        else:
-            roll()
 
-#?
+    #Start
+    Find_Roll("spirit_beads.png","spirit_beads2.png")
+    click_verify("spirit_beads2.png",1,"ok.png",1)
+    click_verify("ok.png",1,"ok.png",0)
+    return 
+
+
+#OK
 def Heaven_Treasury():
+    '''
+        Complete the "Heaven Treasury" quest from Daily Quest NPC
+    '''
+
+    #set image path
     global ImagePath
     ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Heaven Treasury"
     os.chdir(ImagePath)
+
+    #Start
     while True:
-        if verify("heaven_treasury.png") == 1:
-            pyautogui.click(local)
-            Find_Click("heaven_treasury2.png")
-            Find_Click("ok.png")
+            Find_Roll("heaven_treasury.png","heaven_treasury2.png")
+            click_verify("heaven_treasury2.png",1,"ok.png",1)
+            click_verify("ok.png",1,"ok.png",0)
+            
             while True:
                 if verify("heaven_treasury3.png") == 1:
-                    pyautogui.click(local)
+                    click_verify(local,0,"heaven_treasury3.png",0)
                     break
                 elif verify("heaven_treasury4.png") == 1: 
-                    pyautogui.click(local)
+                    click_verify(local,0,"heaven_treasury4.png",0)
                     break
                 elif verify("heaven_treasury5.png") == 1:
-                    pyautogui.click(local)
+                    click_verify(local,0,"heaven_treasury5.png",0)
                     break
                 elif verify("heaven_treasury6.png") == 1: 
-                    pyautogui.click(local) 
+                    click_verify(local,0,"heaven_treasury6.png",0)
                     break
-            Find_Click("heaven_treasury7.png")
-            Find_Click("ok.png")  
-            Find_Click("heaven_treasury8.png")
+            
+            click_verify("heaven_treasury7.png",1,"ok.png",1)
+            click_verify("ok.png",1,"heaven_treasury8.png",1)
+            click_verify("heaven_treasury8.png",1,"heaven_treasury9.png",1)
             Find_Click("heaven_treasury9.png")   
-            return 0
-        else:
-            roll()
+            click_verify("heaven_treasury9.png",1,"heaven_treasury9.png",0)
+            return
+        
 
-#?
+#??????????????
 def EverythingHasAPrice():
+    '''
+        Complete the "Everything has a Price" quest from Daily Quest NPC
+    '''
 
+   
+
+    #start
     while True:
+        #set image path
         global ImagePath
         ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Everything Has a Price"
         os.chdir(ImagePath)
         if verify("EverythingHasAPrice.png") == 1 or verify("EverythingHasAPrice2.png") == 1:
             while True: 
                 if verify("EverythingHasAPrice.png") == 1:
-                    pyautogui.click(local)
+                    click_verify("EverythingHasAPrice.png",1,"EverythingHasAPrice.png",0)
                     break
                 else:
                     if verify("EverythingHasAPrice2.png") == 1:
-                        pyautogui.click(local)
+                        click_verify("EverythingHasAPrice2.png",1,"EverythingHasAPrice2.png",0)
                         break
             while True:
                 if verify("EverythingHasAPrice_2.png") == 1:
-                    pyautogui.click(local)
+                    click_verify("EverythingHasAPrice_2.png",1,"EverythingHasAPrice_2.png",0)
+                    click_verify("EverythingHasAPrice_3.png",1,"EverythingHasAPrice_3.png",0)
                     break
                 else:
                     if verify("EverythingHasAPrice_3.png") == 1:
-                        pyautogui.click(local)
-                        break
-            time.sleep(1)
-            if verify("EverythingHasAPrice_10.png")== 1:
-                pyautogui.click(local)
-                Find_Click("EverythingHasAPrice_12.png")
+                        click_verify("EverythingHasAPrice_3.png",1,"EverythingHasAPrice_3.png",0)
+                        break   
+
+            time.sleep(2)             
+            if verify("EverythingHasAPrice_10.png") == 1:
+                click_verify("EverythingHasAPrice_10.png",1,"EverythingHasAPrice_12.png",1)
+                click_verify("EverythingHasAPrice_12.png",1,"EverythingHasAPrice_12.png",0)
                 return 0 
-            Find_Click("EverythingHasAPrice_4.png") 
-            pyautogui.press("b")  
-            Find_Click("EverythingHasAPrice_5.png")
-            Find_Click("EverythingHasAPrice_6.png")
+
+            click_verify("EverythingHasAPrice_4.png",1,"EverythingHasAPrice_4.png",0)
+            Bag(1) 
+            click_verify("EverythingHasAPrice_5.png",1,"EverythingHasAPrice_6.png",1)
+            click_verify("EverythingHasAPrice_6.png",1,"EverythingHasAPrice_7.png",1)
             Find_Click("EverythingHasAPrice_7.png")
+            click_verify("EverythingHasAPrice_7.png",1,"EverythingHasAPrice_7.png",0)
             time.sleep(2)
-            Find_Click("EverythingHasAPrice_8.png")
-            Find_Click("EverythingHasAPrice_9.png")
+            Bag(0)
+            click_verify("EverythingHasAPrice_9.png",1,"EverythingHasAPrice_9.png",0)
             time.sleep(300)
-            pyautogui.click(local)
-            Find_Click("EverythingHasAPrice_12.png")
-            Find_Click("EverythingHasAPrice_13.png")
+            click_verify(local,0,"EverythingHasAPrice_12.png",1)
+            click_verify("EverythingHasAPrice_12.png",1,"EverythingHasAPrice_13.png",1)
+            click_verify("EverythingHasAPrice_13.png",1,"EverythingHasAPrice_13.png",0)
             BackToDaily()
         else:
             roll()
@@ -405,39 +474,85 @@ def Devil_Challenge():
     Find_Click("DevilChallenge5.png")
     Find_Click("DevilChallenge6.png")
 
+#OK
+def Set_Button(a:str,b:str):
+    '''
+        Set Button position
+        - params: a = Arrow name PNG | b = Next step name PNG
+    '''
+    os.chdir(ImagePath)
+    c = None
+    while True:
+        if verify(a) == 1:
+            if c != None:
+                pyautogui.click(xxx)
 
-    
+            xxx = local
+            pyautogui.click(xxx)
+            for vv in range(30):
+                time.sleep(0.1)
+                if verify(b) == 1:
+                    c = xxx
+                    click_verify(c,0,b,0)
+                    return c
+                
 
-#Go To LDPlayer Window (Done)
-ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
-os.chdir(ImagePath)
-while True:
-        title = "LDPlayer"
+#OK
+def Bag(a:int):
+    '''
+        Open and close the bag
+        - params: a = 1:Open Bag
+                      0:Close Bag
+    '''
+
+    global BagPath
+    BagPath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
+    os.chdir(BagPath)
+
+    if a == 1:
+        click_verify(BA_position,0,"bag_button.png",1)
+        click_verify("bag_button.png",1,"bag_open.png",1)
+    elif a == 0:
+        click_verify("UP3.png",1,"UP3.png",0)
+        click_verify(BA_position,0,"bag_button.png",0)
+
+    os.chdir(ImagePath)
+
+#OK
+def Switch_Window(a:str,b:str):
+    '''
+        Switch between windows
+        - params: a = Windows Title | b = Windows Image Name PNG
+    '''
+    global ImagePath
+    ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
+    os.chdir(ImagePath)
+
+    while True:
+        title = a
         window = pygetwindow.getWindowsWithTitle(title)[0]
         window.activate()
-        if verify("LDPlayer_Window.png") == 1:
+        if verify(b) == 1:
             break
 
+#Go To LDPlayer Window (OK)
+Switch_Window("LDPlayer","LDPlayer_Window.png")
 
-#set DA_Position = Daily Arrow Position (OK)
-global DA_position
-DA_position = None
-while True:
-    if verify("daily_arrow.png") == 1:
-        if DA_position != None:
-            pyautogui.click(xxx)
+#Set Daily Arrow Position
+DA_position = Set_Button("daily_arrow.png","daily_button.png")
 
-        xxx = local
-        pyautogui.click(xxx)
-    
-        if verify("daily_button.png") == 1:
-            DA_position = xxx
-            click_verify(DA_position,0,"daily_button.png",0)
-            break
+#Set Bag Arrow Position
+BA_position = Set_Button("bag_arrow.png","bag_button.png")
+
+
 
 
 #Start Program
 BackToDaily()
+EverythingHasAPrice()
+
+
+
 
 
 
