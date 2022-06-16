@@ -1,17 +1,6 @@
-from gettext import find
 from pickle import NONE
-from platform import python_branch
-from ssl import VerifyFlags
-from threading import local
 from time import sleep, time
-from operator import truediv
-from cv2 import dnn_DetectionModel
 import pyautogui, os, time,pygetwindow
-
-
-
-
-
 
 #?
 def verify(name:str) -> int:
