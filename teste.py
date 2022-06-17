@@ -51,8 +51,9 @@ def roll():
             return 0
 
 time.sleep(2)
-caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Everything Has a Price"
+caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
 os.chdir(caminho)
 
 while True:
-    Find_Move("EverythingHasAPrice_10.png")
+    Find_Move("teste22.png")
+    print("a")

@@ -27,8 +27,10 @@ def Find_Click(name:str):
         Click on local image if found
         - params: name = ImageName.png
     '''
-    if verify(name) == 1:
-        pyautogui.click(local)
+    for vv in range(10):
+        time.sleep(0.1)
+        if verify(name) == 1:
+            pyautogui.click(local)
 
 #OK
 def Find_Move(name:str):
@@ -109,19 +111,20 @@ def click_verify(a:str,b:int,c:str,d:int):
                     0 -- If image not found
     '''
     while True:
+
         if b == 1:
          Find_Click(a)
         elif b == 0:
             pyautogui.click(a)
-        time.sleep(0.1)
+
         if d == 1:
-            for vv in range(30):
-                time.sleep(0.1)
+            for vv in range(10):
+                time.sleep(0.01)
                 if verify(c) == 1:
                     return 
         elif d == 0:
-            for vv in range(30):
-                time.sleep(0.1)
+            for vv in range(10):
+                time.sleep(0.01)
                 if verify(c) == 0:
                     return
 
@@ -148,33 +151,44 @@ def BackToDaily():
             if verify("daily_quest.png") == 1:
                 return 
 
-#?
+#OK
 def Bright_Fortune():
-            global caminho
-            caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Bright Fortune"
-            os.chdir(caminho)
-            Find_Click("Bright_Fortune.png")
-            time.sleep(2)
-            pyautogui.click(DA_position)
-            Find_Click("bright_fortune_npc.png")
-            Find_Click("bright_fortune_1.png")
-            Find_Click("bright_fortune_2.png")
-            Find_Click("ok.png")
-            while True:
-                Find_Click("bright_fortune_3.png")             
-                time.sleep(3)
-                if verify("bright_fortune_4.png") == 1:
-                    if verify("ok.png") == 1:
-                        pyautogui.click(local)                
-                else:
-                    if verify("ok.png") == 1:
-                        pyautogui.click(local)
-                        break
-                
-            Find_Click("bright_fortune_npc2.png")
-            time.sleep(1)
-            Find_Click("bright_fortune_end.png")
-            return 0
+        '''
+            Complete the "Bright Fortune" quest from Daily Quest NPC
+        '''
+
+        #set image path
+        global ImagePath
+        ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Bright Fortune"
+        os.chdir(ImagePath)
+
+        #start
+        click_verify("Bright_Fortune.png",1,"Bright_Fortune.png",0)
+        time.sleep(2)
+        click_verify("bright_fortune_npc.png",1,"bright_fortune_1.png",1)
+        click_verify("bright_fortune_1.png",1,"bright_fortune_2.png",1)
+        click_verify("bright_fortune_2.png",1,"ok.png",1)
+        click_verify("ok.png",1,"ok.png",0)
+        while True:
+            Find_Move("bright_fortune_3.png")
+            pyautogui.move(0,60,0.2)
+            time.sleep(0.2)
+            pyautogui.click()
+            time.sleep(1.2)
+            if verify("bright_fortune_4.png") == 1:
+                if verify("ok.png") == 1:
+                    click_verify("ok.png",1,"ok.png",0)              
+            else:
+                if verify("ok.png") == 1:
+                    click_verify("ok.png",1,"ok.png",0)   
+                    break
+
+        click_verify("bright_fortune_5.png",1,"bright_fortune_5.png",0)           
+        click_verify("bright_fortune_npc2.png",1,"bright_fortune_end.png",1)
+        click_verify("bright_fortune_end.png",1,"bright_fortune_end.png",0)
+        BackToDaily()
+        print("Bright Fortune Done")
+        return
 
 #OK
 def Open_Treasure():
@@ -195,6 +209,8 @@ def Open_Treasure():
     click_verify("ok.png",1,"open_treasure_npc.png",1)  
     click_verify("open_treasure_npc.png",1,"open_treasure_4.png",1)
     click_verify("open_treasure_4.png",1,"open_treasure_4.png",0)
+    BackToDaily()
+    print("Open Treasure Done")
     return 
 
 #?
@@ -244,8 +260,10 @@ def Magnolias_All_Around():
     click_verify("magnolias_all_around8.png",1,"ok.png",1)
     click_verify("ok.png",1,"ok.png",0)
     Bag(0)
-    click_verify("magnolias_all_around9.png",1,"magnolias_all_around10",1)
-    click_verify("magnolias_all_around10",1,"magnolias_all_around10",0)
+    click_verify("magnolias_all_around9.png",1,"magnolias_all_around10.png",1)
+    click_verify("magnolias_all_around10.png",1,"magnolias_all_around10.png",0)
+    BackToDaily()
+    print("Magnolias All Around Done")
     return                    
 
 #OK
@@ -263,6 +281,8 @@ def Spirit_Beads():
     Find_Roll("spirit_beads.png","spirit_beads2.png")
     click_verify("spirit_beads2.png",1,"ok.png",1)
     click_verify("ok.png",1,"ok.png",0)
+    BackToDaily()
+    print("Spirit Beads Done")
     return 
 
 
@@ -302,10 +322,12 @@ def Heaven_Treasury():
             click_verify("heaven_treasury8.png",1,"heaven_treasury9.png",1)
             Find_Click("heaven_treasury9.png")   
             click_verify("heaven_treasury9.png",1,"heaven_treasury9.png",0)
+            BackToDaily()
+            print("Heaven Treasury Done")
             return
         
 
-#??????????????
+#OK(ICE DOESNT WORK)
 def EverythingHasAPrice():
     '''
         Complete the "Everything has a Price" quest from Daily Quest NPC
@@ -342,13 +364,14 @@ def EverythingHasAPrice():
             if verify("EverythingHasAPrice_10.png") == 1:
                 click_verify("EverythingHasAPrice_10.png",1,"EverythingHasAPrice_12.png",1)
                 click_verify("EverythingHasAPrice_12.png",1,"EverythingHasAPrice_12.png",0)
-                return 0 
+                BackToDaily()
+                print("Everything has a Price Done")
+                return
 
             click_verify("EverythingHasAPrice_4.png",1,"EverythingHasAPrice_4.png",0)
             Bag(1) 
             click_verify("EverythingHasAPrice_5.png",1,"EverythingHasAPrice_6.png",1)
             click_verify("EverythingHasAPrice_6.png",1,"EverythingHasAPrice_7.png",1)
-            Find_Click("EverythingHasAPrice_7.png")
             click_verify("EverythingHasAPrice_7.png",1,"EverythingHasAPrice_7.png",0)
             time.sleep(2)
             Bag(0)
@@ -426,34 +449,31 @@ def TowerOfMystery():
         else:
             roll()
 
-#?
-def Free_Pack():
-    global caminho
-    caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Free Pack"
-    Find_Click("FreePack.png")
-    pyautogui.click(DA_position)
-    Find_Click("FreePack1.png")
-    Find_Click("FreePack2.png")
-
-#?
+#OK
 def Labyrinth():
-    global caminho
-    caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Labyrinth"
-    os.chdir(caminho)
-    Find_Click("Labyrinth4.png")
-    pyautogui.click(DA_position)
-    Find_Click("Labyrinth.png")
-    Find_Click("Labyrinth1.png")
+    '''
+        Complete the "Labyrinth" quest from Daily Quest NPC
+    '''
+    
+    #set image path
+    global ImagePath
+    ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Labyrinth"
+    os.chdir(ImagePath)
+
+    #start
+    click_verify("Labyrinth4.png",1,"Labyrinth4.png",0)
+    click_verify("Labyrinth.png",1,"Labyrinth1.png",1)
+    click_verify("Labyrinth1.png",1,"Labyrinth1.png",0)
     time.sleep(2)
-    pyautogui.press("b")
-    while True:
-        Find_Click("Labyrinth2.png")
-        if verify("Labyrinth3.png") == 1:
-            Find_Click("Labyrinth3.png")
-            break
-    Find_Click("Labyrinth5.png")
+    Bag(1)
+    click_verify("Labyrinth2.png",1,"Labyrinth3.png",1)
+    click_verify("Labyrinth3.png",1,"Labyrinth5.png",1)
+    click_verify("Labyrinth5.png",1,"Labyrinth5.png",0)
     time.sleep(2)
-    Find_Click("Labyrinth6.png")
+    Bag(0)
+    BackToDaily()
+    print("Labyrinth Done")
+
 
 #?
 def Devil_Challenge():
@@ -496,7 +516,6 @@ def Set_Button(a:str,b:str):
                     click_verify(c,0,b,0)
                     return c
                 
-
 #OK
 def Bag(a:int):
     '''
@@ -549,6 +568,11 @@ BA_position = Set_Button("bag_arrow.png","bag_button.png")
 
 #Start Program
 BackToDaily()
+Bright_Fortune()
+Open_Treasure()
+Magnolias_All_Around()
+Spirit_Beads()
+Heaven_Treasury()
 EverythingHasAPrice()
 
 
