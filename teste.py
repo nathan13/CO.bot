@@ -50,10 +50,44 @@ def roll():
             pyautogui.mouseUp()  
             return 0
 
-time.sleep(2)
-caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
-os.chdir(caminho)
 
-while True:
-    Find_Move("teste22.png")
-    print("a")
+#OK
+def click_verify(a:str,b:int,c:str,d:int):
+    '''Click and verify next step
+       -params: a = Where to click
+                b = 1 -- Search a Image
+                    0 -- Click directly
+                c = Next Step
+                d = 1 -- If image found
+                    0 -- If image not found
+    '''
+    while True:
+        print(a)            
+        if b == 1:
+         Find_Click(a)
+        elif b == 0:
+            pyautogui.click(a)
+        print(a)
+
+        if d == 1:
+            for vv in range(10):
+                time.sleep(0.01)
+                if verify(c) == 1:
+                    return 
+        elif d == 0:
+            for vv in range(10):
+                time.sleep(0.01)
+                if verify(c) == 0:
+                    return
+
+
+time.sleep(2)
+ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Tower Of Mystery"
+os.chdir(ImagePath)
+
+
+
+click_verify("towerofmystery10.png",1,"towerofmystery10.png",0)
+
+'''pyautogui.move(0,-200)
+NPC_position = pyautogui.position()'''

@@ -1,5 +1,8 @@
+from multiprocessing.context import assert_spawning
 from pickle import NONE
+from re import A
 from time import sleep, time
+from cv2 import CALIB_CB_ACCURACY
 import pyautogui, os, time,pygetwindow
 
 global ImagePath
@@ -27,10 +30,8 @@ def Find_Click(name:str):
         Click on local image if found
         - params: name = ImageName.png
     '''
-    for vv in range(10):
-        time.sleep(0.1)
-        if verify(name) == 1:
-            pyautogui.click(local)
+    if verify(name) == 1:
+        pyautogui.click(local)
 
 #OK
 def Find_Move(name:str):
@@ -38,8 +39,10 @@ def Find_Move(name:str):
         Move to Local Image if found
         - params: name = ImageName.png
     '''
-    if verify(name) == 1:
-        pyautogui.moveTo(local)
+    while True:
+        if verify(name) == 1:
+            pyautogui.moveTo(local)
+            return
            
 #OK
 def roll():
@@ -49,7 +52,7 @@ def roll():
 
     # Set image path                       
     os.chdir(RollPath)
-
+    
     #Start
     while True:
         if verify("roll.png") == 1:
@@ -61,6 +64,36 @@ def roll():
             return
 
 #?
+def roll2(a:str,b:int):
+    '''
+        Scroll mouse in a specific location
+        - pararms: a = Image to find | b = 1 roll.png
+                                           0 roll2.png
+    '''    
+
+    # Set image path                       
+    
+
+    if b == 1:
+        c = "roll.png"
+    elif b == 0:
+        c = "roll2.png"
+
+    #Start
+    while True:
+        os.chdir(ImagePath)
+        if verify(a) == 1:
+            click_verify(a,1,a,0)
+            return
+        else:
+         os.chdir(RollPath)
+         if verify(c) == 1:
+            pyautogui.moveTo(local)
+            pyautogui.mouseDown()
+            pyautogui.move(0,-100,duration=0.2)
+            pyautogui.mouseUp()  
+
+#OK
 def Find_Roll(name:str,name2:str):                       
     while True:
         if verify(name) == 1:
@@ -111,11 +144,12 @@ def click_verify(a:str,b:int,c:str,d:int):
                     0 -- If image not found
     '''
     while True:
-
+        print(a)            
         if b == 1:
          Find_Click(a)
         elif b == 0:
             pyautogui.click(a)
+        print(a)
 
         if d == 1:
             for vv in range(10):
@@ -384,70 +418,79 @@ def EverythingHasAPrice():
         else:
             roll()
 
-#?
+#? TRAVOU PROCURANDO A IMAGEM 14 DEPOIS DO PRIMEIRO BOSS
 def TowerOfMystery():
-    global caminho
-    caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Tower Of Mystery"
-    os.chdir(caminho)
+    '''
+        Complete the "Spirit Beads" quest from Daily Quest NPC
+    '''
+
+    #set image path
+    global ImagePath
+    ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Tower Of Mystery"
+    os.chdir(ImagePath)
+
+    #start
     while True:
-        if verify("towerofmystery.png") == 1:
-            pyautogui.click(local)
-            Find_Click("towerofmystery2.png")
-            Find_Click("towerofmystery3.png")
+            Find_Roll("towerofmystery.png","towerofmystery2.png")
+            click_verify("towerofmystery2.png",1,"towerofmystery3.png",1)
+            click_verify("towerofmystery3.png",1,"towerofmystery3.png",0)
             time.sleep(2)
-            pyautogui.click(DA_position)
-            Find_Click("towerofmystery4.png")
-            if verify("towerofmystery5.png")==1:
-                pyautogui.click(local)
-            Find_Click("towerofmystery6.png")
-            Find_Click("towerofmystery7.png")
-            Find_Click("towerofmystery8.png")
+
+            click_verify("towerofmystery4.png",1,"towerofmystery24.png",1)
+            if verify("common.png")==1:
+                click_verify("common.png",1,"common.png",0)  
+
+            click_verify("towerofmystery6.png",1,"towerofmystery7.png",1)
+            click_verify("towerofmystery7.png",1,"towerofmystery8.png",1)
+            click_verify("towerofmystery8.png",1,"towerofmystery8.png",0)
+            time.sleep(2)
+            
+            Find_Move("towerofmystery16.png")
+            MO_postion = local
+            pyautogui.move(0,-200)
+            NPC_position = pyautogui.position()
+
+            #repeat
             while True:
-                '''time.sleep(2)
-                Find_Move("towerofmystery16.png")
-                pyautogui.move(-450,-100)
-                pyautogui.click()
-                time.sleep(1)
-                verify("towerofmystery16.png")
-                MO_Postion = local'''
-                while True:
-                    if verify("towerofmystery9.png") == 1:
-                        pyautogui.click(local)
-                        break
-                    if verify("towerofmystery18.png") == 1:
-                        pyautogui.click(local)
-                        break
-                    if verify("towerofmystery19.png") == 1:
-                        pyautogui.click(local)    
-                        break
-                while True:
-                    if verify("towerofmystery10.png") == 1:
-                        pyautogui.click(local)
-                        if verify("towerofmystery20.png") == 0:
-                            break
-                    else:  
-                        while True:
-                            if verify("roll2.png") == 1:
-                                pyautogui.moveTo(local)
-                                pyautogui.mouseDown()
-                                pyautogui.move(0,-100,duration=0.2)
-                                pyautogui.mouseUp()  
-                                break
-                if verify("towerofmystery21.png") == 0:
-                   # pyautogui.click(MO_Postion)
-                    #pyautogui.mouseDown()
-                    #pyautogui.move(0,-150)
-                   # pyautogui.mouseUp()
-                   # pyautogui.click(MO_Postion)
-                    Combat_Tower()
-                else:
-                    Find_Click("towerofmystery21.png")
-                    Find_Click("towerofmystery22.png")
-                    Find_Click("towerofmystery23.png")
+                click_verify(NPC_position,0,"towerofmystery20.png",1)
+
+                #IF DONE-
+                if verify("towerofmystery21.png") == 1:
+                    click_verify("towerofmystery21.png",1,"towerofmystery21.png",0)
+                    time.sleep(2)
+                    click_verify("towerofmystery22.png",1,"towerofmystery23.png",1)
+                    click_verify("towerofmystery23.png",1,"towerofmystery23.png",0)
+                    time.sleep(2)
+                    BackToDaily()
                     return
-                     
-        else:
-            roll()
+
+                roll2("towerofmystery10.png",0)
+                click_verify("towerofmystery10.png",1,"towerofmystery10.png",0)
+
+                #start battle
+                pyautogui.moveTo(MO_postion)
+                time.sleep(0.5)
+                pyautogui.mouseDown()
+                pyautogui.move(0,-200,duration= 0.3)
+                pyautogui.mouseUp()
+                time.sleep(0.5)
+                pyautogui.click(MO_postion)
+                while True:
+                    for vv in range(3):
+                        pyautogui.press("1",presses=10,interval= 0.2)
+
+                    if verify("target2.png") == 0:
+                        break
+
+                click_verify("ok.png",1,"ok.png",0)
+                time.sleep(3)
+                click_verify("towerofmystery17.png",1,"towerofmystery12.png",1)
+                click_verify("towerofmystery12.png",1,"towerofmystery13.png",1)
+                click_verify("towerofmystery13.png",1,"towerofmystery13.png",0)
+                time.sleep(1)
+                click_verify("towerofmystery14.png",1,"towerofmystery15.png",1)
+                click_verify("towerofmystery15.png",1,"towerofmystery15.png",0)
+                time.sleep(3)
 
 #OK
 def Labyrinth():
@@ -568,15 +611,14 @@ BA_position = Set_Button("bag_arrow.png","bag_button.png")
 
 #Start Program
 BackToDaily()
-Bright_Fortune()
-Open_Treasure()
-Magnolias_All_Around()
-Spirit_Beads()
-Heaven_Treasury()
-EverythingHasAPrice()
-
-
-
+#Labyrinth()
+#Bright_Fortune()
+#Open_Treasure()
+#Magnolias_All_Around()
+#Spirit_Beads()
+#Heaven_Treasury()
+#EverythingHasAPrice()
+TowerOfMystery()
 
 
 
