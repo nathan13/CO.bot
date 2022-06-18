@@ -86,8 +86,8 @@ ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Tower Of 
 os.chdir(ImagePath)
 
 
-
-click_verify("towerofmystery10.png",1,"towerofmystery10.png",0)
+while True: 
+    Find_Move("towerofmystery25.png")
 
 '''pyautogui.move(0,-200)
 NPC_position = pyautogui.position()'''

@@ -168,9 +168,9 @@ def BackToDaily():
         Back to Daily Quest NPC
     '''
     #set image path
-    global ImagePath
-    ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
-    os.chdir(ImagePath)
+    global BackImagePath
+    BackImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img"
+    os.chdir(BackImagePath)
 
     #start
     while True:
@@ -183,6 +183,7 @@ def BackToDaily():
         for a in range(60):
             time.sleep(0.1)
             if verify("daily_quest.png") == 1:
+                os.chdir(ImagePath)
                 return 
 
 #OK
@@ -294,7 +295,7 @@ def Magnolias_All_Around():
     click_verify("magnolias_all_around8.png",1,"ok.png",1)
     click_verify("ok.png",1,"ok.png",0)
     Bag(0)
-    click_verify("magnolias_all_around9.png",1,"magnolias_all_around10.png",1)
+    click_verify("magnolias_all_around3.png",1,"magnolias_all_around10.png",1)
     click_verify("magnolias_all_around10.png",1,"magnolias_all_around10.png",0)
     BackToDaily()
     print("Magnolias All Around Done")
@@ -418,7 +419,7 @@ def EverythingHasAPrice():
         else:
             roll()
 
-#? TRAVOU PROCURANDO A IMAGEM 14 DEPOIS DO PRIMEIRO BOSS
+#OK
 def TowerOfMystery():
     '''
         Complete the "Spirit Beads" quest from Daily Quest NPC
@@ -462,6 +463,10 @@ def TowerOfMystery():
                     click_verify("towerofmystery23.png",1,"towerofmystery23.png",0)
                     time.sleep(2)
                     BackToDaily()
+                    
+                    Find_Roll("towerofmystery.png","towerofmystery2.png")
+                    click_verify("towerofmystery2.png",1,"towerofmystery2.png",0)
+                    click_verify("towerofmystery25.png",1,"towerofmystery25.png",0)
                     return
 
                 roll2("towerofmystery10.png",0)
@@ -473,7 +478,6 @@ def TowerOfMystery():
                 pyautogui.mouseDown()
                 pyautogui.move(0,-200,duration= 0.3)
                 pyautogui.mouseUp()
-                time.sleep(0.5)
                 pyautogui.click(MO_postion)
                 while True:
                     for vv in range(3):
@@ -611,14 +615,15 @@ BA_position = Set_Button("bag_arrow.png","bag_button.png")
 
 #Start Program
 BackToDaily()
-#Labyrinth()
-#Bright_Fortune()
-#Open_Treasure()
-#Magnolias_All_Around()
-#Spirit_Beads()
-#Heaven_Treasury()
-#EverythingHasAPrice()
+Labyrinth()
+Bright_Fortune()
+Open_Treasure()
+Magnolias_All_Around()
+Spirit_Beads()
+Heaven_Treasury()
 TowerOfMystery()
+EverythingHasAPrice()
+
 
 
 
