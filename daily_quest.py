@@ -63,7 +63,7 @@ def roll():
             os.chdir(ImagePath)
             return
 
-#?
+#OK
 def roll2(a:str,b:int):
     '''
         Scroll mouse in a specific location
@@ -238,8 +238,8 @@ def Open_Treasure():
 
     #start
     click_verify("open_treasure.png",1,"open_treasure_1.png",1)
-    click_verify("open_treasure_1.png",1,"open_treasure_2.png",1)
-    click_verify("open_treasure_2.png",1,"open_treasure_3.png",1)
+    click_verify("open_treasure_1.png",1,"chest.png",1)
+    click_verify("chest.png",1,"open_treasure_3.png",1)
     click_verify("open_treasure_3.png",1,"ok.png",1)
     click_verify("ok.png",1,"open_treasure_npc.png",1)  
     click_verify("open_treasure_npc.png",1,"open_treasure_4.png",1)
@@ -362,7 +362,7 @@ def Heaven_Treasury():
             return
         
 
-#OK(ICE DOESNT WORK)
+#OK(ICE DOESNT WORK)(O FINAL ESTA BUGADO)
 def EverythingHasAPrice():
     '''
         Complete the "Everything has a Price" quest from Daily Quest NPC
@@ -419,10 +419,10 @@ def EverythingHasAPrice():
         else:
             roll()
 
-#OK
+#OK claim bugado, testar
 def TowerOfMystery():
     '''
-        Complete the "Spirit Beads" quest from Daily Quest NPC
+        Complete the "Tower Of Mystery" quest from Daily Quest NPC
     '''
 
     #set image path
@@ -522,24 +522,59 @@ def Labyrinth():
     print("Labyrinth Done")
 
 
-#?
+#OK(ARRUMAR NPC IMAGE; SOLUCIONAR CLICK NO CHEST AFTER BOSS)
 def Devil_Challenge():
-    global caminho
-    caminho = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Fellow Fighters"
-    Find_Click("EndlessTower.png")
-    Find_Click("EndlessTower1.png")
-    Find_Click("EndlessTower2.png")
-    Find_Click("EndlessTower3.png")
+    '''
+        Complete Devil Challenge
+    '''
+
+    #set images path
+    global ImagePath
+    ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Devil Challenge"
+    SaintImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Solar Saint NPC"
+
     
-    Find_Click("DevilChallenge.png")
-    Find_Click("DevilChallenge1.png")
-    Find_Click("DevilChallenge2.png")
-    Find_Click("DevilChallenge.png")
-    Find_Click("DevilChallenge3.png")
-    Find_Click("DevilChallenge4.png")
-    Find_Click("DevilChallenge2.png")
-    Find_Click("DevilChallenge5.png")
-    Find_Click("DevilChallenge6.png")
+    #start
+    while True:
+        os.chdir(SaintImagePath)
+        click_verify("pathfinding_icon.png",1,"pk_tournaments.png",1)
+        click_verify("pk_tournaments.png",1,"dis_city.png",1)
+        click_verify("dis_city.png",1,"x.png",1)
+        click_verify("x.png",1,"x.png",0)
+        os.chdir(ImagePath)
+    
+
+        click_verify("devilchallenge_npc.png",1,"realm_officer.png",1)
+
+        if verify("swept_today.png") == 0:
+            click_verify("sweep_devils.png",1,"challenge.png",1)
+            click_verify("challenge.png",1,"challenge.png",0)
+            click_verify("devilchallenge_npc.png",1,"realm_officer.png",1)
+        
+        click_verify("challenge.png",1,"challenge.png",0)
+        time.sleep(2)
+
+        if verify("sure.png") == 1:
+            click_verify("sure.png",1,"sure.png",0)
+            return
+
+        Find_Roll("0-1.png","challenge.png")
+        click_verify("challenge.png",1,"monster_npc.png",1)
+        MO_position = local
+        click_verify(MO_position,0,"yes.png",1)
+        click_verify("yes.png",1,"yes.png",0)
+        verify("battle.png")
+        battle_position = local
+        click_verify("battle.png",1,"battle.png",0)
+        while True:
+            if verify("target.png") == 0:
+                time.sleep(9)
+                break
+        click_verify(battle_position,0,"ok.png",1) 
+        click_verify("ok.png",1,"ok2.png",1)   
+        click_verify("ok2.png",1,"ok2.png",0)    
+        click_verify("chest.png",1,"claim.png",1)
+        click_verify("claim.png",1,"claim.png",0)
 
 #OK
 def Set_Button(a:str,b:str):
@@ -614,6 +649,8 @@ BA_position = Set_Button("bag_arrow.png","bag_button.png")
 
 
 #Start Program
+
+Devil_Challenge()
 BackToDaily()
 Labyrinth()
 Bright_Fortune()
@@ -623,6 +660,10 @@ Spirit_Beads()
 Heaven_Treasury()
 TowerOfMystery()
 EverythingHasAPrice()
+
+
+
+
 
 
 

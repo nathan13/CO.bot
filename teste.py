@@ -82,12 +82,12 @@ def click_verify(a:str,b:int,c:str,d:int):
 
 
 time.sleep(2)
-ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Tower Of Mystery"
+ImagePath = r"C:\Users\Nathan\Documents\Python\Automação\Conquer\img\Open Treasure"
 os.chdir(ImagePath)
 
 
 while True: 
-    Find_Move("towerofmystery25.png")
+    Find_Move("chest.png")
 
 '''pyautogui.move(0,-200)
 NPC_position = pyautogui.position()'''
